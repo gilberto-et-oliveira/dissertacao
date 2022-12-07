@@ -1,3 +1,4 @@
+# CRIA MÃ‰TRICAS DE VIZINHANÃ‡A GLOBAL E LOCAL PARA CADA CÃ‰LULA E EXPORTA UM CSV
 
 #install.packages("spdep")
 #install.packages("spatialreg")
@@ -33,22 +34,22 @@ head(grade_df)
 
 
 for (c in colnames(grade_df)){
-  if ( c == 'id' || c == 'col' || c == 'row'){ # colunas que não serão analisadas
-   print( paste('coluna não será analisada ->',c)  )
+  if ( c == 'id' || c == 'col' || c == 'row'){ # colunas que nÃ£o serÃ£o analisadas
+   print( paste('coluna nÃ£o serÃ¡ analisada ->',c)  )
   }
   else{ 
-    print(paste('metricas de vizinhança da coluna:', c))
-    for (linha in (1: length(grade_df$id)) ){ # células
+    print(paste('metricas de vizinhanÃ§a da coluna:', c))
+    for (linha in (1: length(grade_df$id)) ){ # cÃ©lulas
       col_viz_geral <- ''
       col_viz_queen <- ''
       col_viz_geral <- paste(c, "_global", sep='') 
       col_viz_queen <- paste(c, "_queen", sep='')
       viz <- 0
-      for ( i in w  ){# vizinhança
-        for ( cel in i  ){ # celulas da vizinhança
+      for ( i in w  ){# vizinhanÃ§a
+        for ( cel in i  ){ # celulas da vizinhanÃ§a
           viz <- viz + grade_df[cel, c]
         }
-        viz <- viz / length(i) # média da vizinhança
+        viz <- viz / length(i) # mÃ©dia da vizinhanÃ§a
       }
       grade_df[linha, col_viz_queen] <- grade_df[linha, c] - viz
       grade_df[linha, col_viz_geral] <- grade_df[linha, c] - (sum( grade_df[linha, c])/length(grade_df$id)  )

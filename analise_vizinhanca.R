@@ -1,3 +1,4 @@
+# Calculo de m√©tricas de vizinhan√ßa global e de vizinhos (queen ou rook)
 
 #install.packages("spdep")
 #install.packages("spatialreg")
@@ -27,27 +28,27 @@ head(grade_df  )
 #grade_df[is.na(grade_df)] <- 0
 
 for (c in colnames(grade_df)){
-  if ( c == 'id' || c == 'col' || c == 'row'){ # colunas que n„o ser„o analisadas
-   print( paste('coluna n„o ser· analisada ->',c)  )
+  if ( c == 'id' || c == 'col' || c == 'row'){ # colunas que n√£o ser√£o analisadas
+   print( paste('coluna n√£o ser√° analisada ->',c)  )
   }
   else{ 
-    print(paste('metricas de vizinhanÁa da coluna:', c))
-    for (linha in (1: length(grade_df$id)) ){ # cÈlulas
+    print(paste('metricas de vizinhan√ßa da coluna:', c))
+    for (linha in (1: length(grade_df$id)) ){ # c√©lulas
       col_viz_geral <- ''
       col_viz_queen <- ''
       col_viz_geral <- paste(c, "_global", sep='') 
       col_viz_queen <- paste(c, "_queen", sep='')
       viz <- 0
-      for ( i in w  ){# vizinhanÁa
-        for ( cel in i  ){ # celulas da vizinhanÁa
+      for ( i in w  ){# vizinhan√ßa
+        for ( cel in i  ){ # celulas da vizinhan√ßa
           viz <- viz + grade_df[cel, c]
         }
-        viz <- viz / length(i) # mÈdia da vizinhanÁa
+        viz <- viz / length(i) # m√©dia da vizinhan√ßa
       }
       grade_df[linha, col_viz_queen] <- grade_df[linha, c] - viz
       grade_df[linha, col_viz_geral] <- grade_df[linha, c] - (sum( grade_df[linha, c])/length(grade_df$id)  )
     }
-    print( paste('mÈtricas para',c, 'calculadas') )
+    print( paste('m√©tricas para',c, 'calculadas') )
   }
   }
 
